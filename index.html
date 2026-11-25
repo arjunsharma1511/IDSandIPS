@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A long, guided and animated beginner lab for learning IDS and IPS monitoring, alert analysis and safe rule tuning.">
+  <title>Sentinel Junction | IDS and IPS Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Sentinel Junction home">
+      <span class="brand-mark">SJ</span>
+      <span><b>Sentinel Junction</b><small>IDS + IPS Academy</small></span>
+    </a>
+    <nav aria-label="Lab navigation">
+      <a href="#briefing">Briefing</a>
+      <a href="#placement">Traffic path</a>
+      <a href="#console">SOC console</a>
+      <a href="#final-shift">Final shift</a>
+    </nav>
+    <div class="progress-box">
+      <span id="progressLabel">0 / 32 activities</span>
+      <progress id="progressBar" value="0" max="32">0 of 32</progress>
+    </div>
+    <button class="icon-button" id="resetLab" type="button">Reset lab</button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span></span> DEFENSIVE BLUE-TEAM SIMULATION</p>
+        <h1>See the traffic.<br><em>Make the decision.</em></h1>
+        <p class="hero-lead">Learn how an Intrusion Detection System observes and alerts, how an Intrusion Prevention System can act inline, and how a careful analyst separates real risk from harmless noise.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#briefing">Start guided briefing</a>
+          <button class="button secondary" id="resumeLab" type="button">Resume saved progress</button>
+        </div>
+        <ul class="hero-facts" aria-label="Lab facts">
+          <li><b>32</b><span>guided activities</span></li>
+          <li><b>90-120</b><span>suggested minutes</span></li>
+          <li><b>16</b><span>realistic alerts</span></li>
+          <li><b>1</b><span>downloadable certificate</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-network reveal" aria-label="Animated network showing IPS inline and IDS monitoring a copy of traffic">
+        <div class="radar-sweep" aria-hidden="true"></div>
+        <div class="network-label">LIVE TRAINING TOPOLOGY</div>
+        <div class="topology-node internet-node"><span class="node-icon">WWW</span><b>Internet</b><small>Outside traffic</small></div>
+        <div class="topology-node ips-node"><span class="node-icon shield">IPS</span><b>Inline gate</b><small>Can allow or drop</small></div>
+        <div class="topology-node switch-node"><span class="node-icon">SW</span><b>Core switch</b><small>Forwards traffic</small></div>
+        <div class="topology-node server-node"><span class="node-icon">SRV</span><b>Web server</b><small>10.20.5.20</small></div>
+        <div class="topology-node ids-node"><span class="node-icon eye">IDS</span><b>Passive sensor</b><small>Observes a copy</small></div>
+        <div class="wire wire-one"></div>
+        <div class="wire wire-two"></div>
+        <div class="wire wire-three"></div>
+        <div class="wire tap-wire"></div>
+        <span class="travel-packet packet-one">443</span>
+        <span class="travel-packet packet-two">53</span>
+        <span class="travel-packet packet-three">ALERT</span>
+        <div class="hero-status"><i></i><span>Simulation online</span><b id="heroEvent">HTTPS request allowed</b></div>
+      </div>
+    </section>
+
+    <section class="time-route" aria-label="Suggested lab route">
+      <article><span>01</span><div><b>Learn</b><small>What IDS and IPS do</small></div></article>
+      <article><span>02</span><div><b>Observe</b><small>Follow the traffic path</small></div></article>
+      <article><span>03</span><div><b>Investigate</b><small>Work sixteen alerts</small></div></article>
+      <article><span>04</span><div><b>Tune</b><small>Reduce noise safely</small></div></article>
+      <article><span>05</span><div><b>Qualify</b><small>Complete the final shift</small></div></article>
+    </section>
+
+    <section class="section panel" id="briefing">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">BRIEFING 01</p><h2>Start with the one difference that matters</h2></div>
+        <p>Both systems inspect traffic. Their position and permitted action are different.</p>
+      </div>
+
+      <div class="definition-grid">
+        <article class="definition-card ids-card reveal">
+          <div class="definition-top"><span class="large-badge">IDS</span><span class="status-pill blue">OBSERVES</span></div>
+          <h3>Intrusion Detection System</h3>
+          <p><b>What:</b> A security control that monitors traffic or events and creates alerts when activity matches a detection condition.</p>
+          <p><b>Why:</b> It gives analysts visibility without normally sitting in the direct path of the connection.</p>
+          <p><b>How:</b> A network tap or mirrored switch port sends the IDS a copy of traffic. The original traffic continues.</p>
+          <div class="mini-flow"><span>Traffic</span><i></i><span>Destination</span><em>copy to IDS</em></div>
+        </article>
+        <article class="definition-card ips-card reveal">
+          <div class="definition-top"><span class="large-badge">IPS</span><span class="status-pill orange">INLINE</span></div>
+          <h3>Intrusion Prevention System</h3>
+          <p><b>What:</b> A security control that inspects traffic in the connection path and can take a configured prevention action.</p>
+          <p><b>Why:</b> It can stop selected harmful traffic before the traffic reaches its destination.</p>
+          <p><b>How:</b> Every packet passes through the IPS. A rule may allow, drop, reject or alert according to policy.</p>
+          <div class="mini-flow inline"><span>Traffic</span><i></i><strong>IPS</strong><i></i><span>Destination</span></div>
+        </article>
+      </div>
+
+      <div class="truth-strip reveal">
+        <article><span>01</span><b>An alert is a clue</b><p>It is not automatic proof of an attack.</p></article>
+        <article><span>02</span><b>Context changes meaning</b><p>Asset role, user, time and approval matter.</p></article>
+        <article><span>03</span><b>Blocking has impact</b><p>A poor IPS rule can interrupt legitimate work.</p></article>
+        <article><span>04</span><b>Notes protect hand-offs</b><p>Record evidence, actions, unknowns and reason.</p></article>
+      </div>
+
+      <div class="activity-card reveal" data-activity-card="foundation-1">
+        <div class="activity-head"><span>ACTIVITY 1 OF 32</span><b>Foundation checkpoint</b></div>
+        <h3>Choose the best answer for each statement.</h3>
+        <div id="foundationQuiz" class="quiz-stack"></div>
+        <div class="activity-actions"><button class="button primary" id="checkFoundation" type="button">Check my answers</button><button class="hint-button" data-hint="foundationHint" type="button">Show a hint</button></div>
+        <p class="hint" id="foundationHint">Ask two questions: Is the sensor seeing a copy, or is it in the path? Can it only alert, or may it prevent?</p>
+        <p class="feedback" id="foundationFeedback" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section panel" id="placement">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">BRIEFING 02</p><h2>Follow one packet through the network</h2></div>
+        <p>Switch between views. The animation explains what each control can see and do.</p>
+      </div>
+
+      <div class="path-lab reveal">
+        <div class="path-toolbar">
+          <div><span class="live-dot"></span><b>PACKET JOURNEY</b></div>
+          <div class="segmented" role="group" aria-label="Select sensor view">
+            <button class="active" data-path-mode="ids" type="button">IDS view</button>
+            <button data-path-mode="ips" type="button">IPS view</button>
+          </div>
+          <button class="small-button" id="replayPath" type="button">Replay journey</button>
+        </div>
+        <div class="path-stage" id="pathStage" data-mode="ids">
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="stage-node outside"><span>01</span><b>External client</b><small>198.51.100.24</small></div>
+          <div class="stage-node control"><span id="pathControlLabel">IDS</span><b id="pathControlTitle">Passive sensor</b><small id="pathControlDetail">Receives a traffic copy</small></div>
+          <div class="stage-node destination"><span>03</span><b>Web server</b><small>10.20.5.20:443</small></div>
+          <div class="main-path"></div>
+          <div class="copy-path"></div>
+          <span class="stage-packet primary-packet">TCP/443</span>
+          <span class="stage-packet copy-packet">COPY</span>
+          <div class="decision-bubble" id="pathDecision"><b>IDS result</b><span>Traffic continues; an alert may be created.</span></div>
+        </div>
+        <div class="path-explanation" id="pathExplanation"><b>IDS placement:</b> the sensor is normally outside the direct packet path. It observes a copy, so an IDS alert does not mean the original connection was blocked.</div>
+      </div>
+
+      <div class="activity-card reveal" data-activity-card="foundation-2">
+        <div class="activity-head"><span>ACTIVITY 2 OF 32</span><b>Placement checkpoint</b></div>
+        <h3>Read each situation and select IDS or IPS.</h3>
+        <div id="placementQuiz" class="quiz-stack"></div>
+        <div class="activity-actions"><button class="button primary" id="checkPlacement" type="button">Check placement</button><button class="hint-button" data-hint="placementHint" type="button">Show a hint</button></div>
+        <p class="hint" id="placementHint">Words such as copy, mirror and alert usually describe IDS. Words such as inline, drop and block usually describe IPS.</p>
+        <p class="feedback" id="placementFeedback" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section panel" id="detection">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">BRIEFING 03</p><h2>How a signal becomes an alert</h2></div>
+        <p>Detection logic highlights patterns. The analyst still has to test the meaning.</p>
+      </div>
+
+      <div class="detection-pipeline reveal" aria-label="Animated detection pipeline">
+        <article><span class="pipeline-icon">01</span><b>Capture</b><small>Packet or event arrives</small></article><i></i>
+        <article><span class="pipeline-icon">02</span><b>Decode</b><small>Read protocol and fields</small></article><i></i>
+        <article><span class="pipeline-icon">03</span><b>Compare</b><small>Apply detection logic</small></article><i></i>
+        <article><span class="pipeline-icon">04</span><b>Decide</b><small>Allow, alert or drop</small></article><i></i>
+        <article><span class="pipeline-icon">05</span><b>Record</b><small>Send evidence to analyst</small></article>
+        <span class="pipeline-pulse" aria-hidden="true"></span>
+      </div>
+
+      <div class="method-grid">
+        <article class="reveal"><span>SIGNATURE</span><h3>Known pattern</h3><p>Looks for a defined byte, protocol or request pattern. Precise signatures can be useful, but small changes or harmless matching text may affect results.</p><code>pattern matched = alert</code></article>
+        <article class="reveal"><span>BEHAVIOUR</span><h3>Unusual activity</h3><p>Compares current behaviour with a rule or baseline, such as one device contacting many ports in a short period.</p><code>unusual rate = alert</code></article>
+        <article class="reveal"><span>POLICY</span><h3>Forbidden condition</h3><p>Checks an organisational rule, such as inbound remote desktop traffic from the internet to an office device.</p><code>policy violation = alert</code></article>
+      </div>
+
+      <div class="alert-anatomy reveal">
+        <div class="sample-alert">
+          <div class="sample-alert-head"><span class="severity high">HIGH</span><b>Repeated SMB connection attempts</b><small>ALERT-1042</small></div>
+          <div class="sample-grid"><span><small>TIME</small><b>10:42:18</b></span><span><small>SOURCE</small><b>10.20.5.88</b></span><span><small>DESTINATION</small><b>10.20.5.24</b></span><span><small>PROTOCOL</small><b>TCP/445</b></span><span><small>ACTION</small><b>ALERTED</b></span><span><small>RULE</small><b>SID 22019</b></span></div>
+        </div>
+        <div class="anatomy-copy"><p class="eyebrow">ALERT ANATOMY</p><h3>Fields answer different questions</h3><ul><li><b>Time:</b> when did it happen?</li><li><b>Source:</b> where did it begin?</li><li><b>Destination:</b> what was targeted?</li><li><b>Protocol and port:</b> what service path was used?</li><li><b>Action:</b> was it only alerted or actually blocked?</li><li><b>Rule:</b> what logic caused the alert?</li></ul></div>
+      </div>
+
+      <div class="activity-grid">
+        <article class="activity-card compact reveal" data-activity-card="foundation-3">
+          <div class="activity-head"><span>ACTIVITY 3</span><b>Detection methods</b></div><h3>Match the clue to the method.</h3><div id="methodQuiz" class="quiz-stack"></div><button class="button primary" id="checkMethods" type="button">Check methods</button><p class="feedback" id="methodFeedback"></p>
+        </article>
+        <article class="activity-card compact reveal" data-activity-card="foundation-4">
+          <div class="activity-head"><span>ACTIVITY 4</span><b>Alert fields</b></div><h3>Choose the field that answers each question.</h3><div id="fieldQuiz" class="quiz-stack"></div><button class="button primary" id="checkFields" type="button">Check fields</button><p class="feedback" id="fieldFeedback"></p>
+        </article>
+      </div>
+
+      <div class="outcome-matrix reveal">
+        <div class="matrix-title"><p class="eyebrow">REALITY CHECK</p><h3>Detections can be right, wrong, present or absent</h3></div>
+        <div class="matrix-grid"><span></span><b>THREAT EXISTS</b><b>NO THREAT</b><b>ALERT FIRES</b><article class="tp"><strong>True positive</strong><small>The system alerts on real harmful activity.</small></article><article class="fp"><strong>False positive</strong><small>The system alerts on harmless or approved activity.</small></article><b>NO ALERT</b><article class="fn"><strong>False negative</strong><small>Harmful activity is missed.</small></article><article class="tn"><strong>True negative</strong><small>Normal activity produces no alert.</small></article></div>
+      </div>
+
+      <div class="activity-grid">
+        <article class="activity-card compact reveal" data-activity-card="foundation-5">
+          <div class="activity-head"><span>ACTIVITY 5</span><b>Outcome matrix</b></div><h3>Name each detection outcome.</h3><div id="outcomeQuiz" class="quiz-stack"></div><button class="button primary" id="checkOutcomes" type="button">Check outcomes</button><p class="feedback" id="outcomeFeedback"></p>
+        </article>
+        <article class="activity-card compact reveal" data-activity-card="foundation-6">
+          <div class="activity-head"><span>ACTIVITY 6</span><b>Analyst workflow</b></div><h3>Click the steps in the correct order.</h3><div id="workflowSteps" class="workflow-steps"></div><button class="text-button" id="resetWorkflow" type="button">Reset this activity</button><p class="feedback" id="workflowFeedback"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section console-section" id="console">
+      <div class="section-heading light reveal">
+        <div><p class="eyebrow">PRACTICAL 01</p><h2>Enter the Sentinel SOC console</h2></div>
+        <p>Everything below is simulated in your browser. Use the same calm routine for every alert.</p>
+      </div>
+
+      <div class="routine reveal">
+        <article><span>1</span><div><b>Classify</b><small>Expected, suspicious or high-confidence malicious?</small></div></article>
+        <article><span>2</span><div><b>Respond</b><small>Document, investigate or block and escalate?</small></div></article>
+        <article><span>3</span><div><b>Support</b><small>Which evidence best supports the decision?</small></div></article>
+      </div>
+
+      <div class="soc-shell reveal">
+        <aside class="soc-sidebar">
+          <div class="soc-logo"><span>SJ</span><b>SENTINEL<small>TRAINING SOC</small></b></div>
+          <a href="#soc-dashboard" class="active"><span>DB</span>Dashboard</a>
+          <a href="#live-traffic"><span>LT</span>Live traffic</a>
+          <a href="#alert-queue"><span>AQ</span>Alert queue</a>
+          <a href="#tuning-lab"><span>RL</span>Rule lab</a>
+          <a href="#final-shift"><span>FS</span>Final shift</a>
+          <div class="analyst-card"><span>AN</span><div><b>Student Analyst</b><small>Training workspace</small></div></div>
+        </aside>
+        <div class="soc-main">
+          <header class="soc-top"><div><span class="live-dot"></span> SENSOR STATUS: HEALTHY</div><div>Fictional data only</div></header>
+
+          <section class="soc-view" id="soc-dashboard">
+            <div class="soc-title"><div><small>OPERATIONS OVERVIEW</small><h3>Detection dashboard</h3></div><span class="updated">LIVE SIMULATION</span></div>
+            <div class="metric-grid"><article><span>EVENTS REVIEWED</span><b id="eventCount">12,480</b><small class="up">Streaming normally</small></article><article><span>OPEN ALERTS</span><b>16</b><small>Training queue</small></article><article><span>IPS BLOCKS</span><b id="blockCount">7</b><small>Policy actions</small></article><article><span>SENSOR HEALTH</span><b>100%</b><small class="up">All sensors online</small></article></div>
+            <div class="dashboard-grid">
+              <article class="traffic-chart"><div class="widget-head"><b>Traffic inspected</b><span>Last 12 samples</span></div><div class="bars" id="trafficBars" aria-label="Animated traffic volume chart"></div><div class="chart-legend"><span><i class="blue-dot"></i>Allowed</span><span><i class="orange-dot"></i>Alerted</span><span><i class="red-dot"></i>Blocked</span></div></article>
+              <article class="sensor-widget"><div class="widget-head"><b>Sensor map</b><span>2 controls</span></div><div class="mini-topology"><div class="mini-node net">Internet</div><div class="mini-node ips">IPS-EDGE<br><small>inline</small></div><div class="mini-node core">CORE</div><div class="mini-node lan">LAN</div><div class="mini-node ids">IDS-TAP<br><small>copy</small></div><span class="mini-packet p1"></span><span class="mini-packet p2"></span></div></article>
+            </div>
+          </section>
+
+          <section class="soc-view" id="live-traffic">
+            <div class="soc-title"><div><small>PACKET OBSERVATORY</small><h3>Live traffic stream</h3></div><div class="stream-controls"><button id="toggleStream" type="button">Pause stream</button><button id="injectDemo" type="button">Inject training event</button></div></div>
+            <div class="live-grid">
+              <div class="packet-visualizer"><div class="scan-line"></div><div class="visual-node external">EXT<small>Internet</small></div><div class="visual-node firewall">IPS<small>Edge</small></div><div class="visual-node internal">LAN<small>10.20.5.0/24</small></div><div class="visual-wire one"></div><div class="visual-wire two"></div><span class="visual-packet vp-one">TCP</span><span class="visual-packet vp-two">DNS</span><div class="sensor-copy"><span>IDS COPY</span><i></i></div></div>
+              <div class="live-explanation"><span class="status-pill blue">SAFE SIMULATION</span><h4 id="streamHeadline">Normal HTTPS traffic observed</h4><p id="streamExplanation">The IPS allows the connection. The IDS can still inspect a mirrored copy for detection patterns.</p><dl><div><dt>IDS</dt><dd id="streamIds">Observed</dd></div><div><dt>IPS</dt><dd id="streamIps">Allowed</dd></div><div><dt>Reason</dt><dd id="streamReason">No rule matched</dd></div></dl></div>
+            </div>
+            <div class="event-table-wrap"><table class="event-table"><thead><tr><th>Time</th><th>Source</th><th>Destination</th><th>Service</th><th>IDS</th><th>IPS</th></tr></thead><tbody id="eventRows"></tbody></table></div>
+          </section>
+
+          <section class="soc-view" id="alert-queue">
+            <div class="soc-title"><div><small>GUIDED CASEWORK</small><h3>Alert investigation queue</h3></div><span id="queueProgress" class="queue-progress">0 / 16 resolved</span></div>
+            <div class="queue-help"><b>Do not guess from the title.</b><span>Read the alert, open the context drawer, and answer all three decisions. Hints never reduce your score.</span></div>
+            <div id="alertQueue" class="alert-queue"></div>
+          </section>
+
+          <section class="soc-view" id="tuning-lab">
+            <div class="soc-title"><div><small>PRACTICAL 02</small><h3>Safe rule tuning lab</h3></div><span class="status-pill orange">5 CHANGE REVIEWS</span></div>
+            <div class="tuning-warning"><span>!</span><p><b>Never disable a noisy control without analysis.</b> Good tuning preserves useful detection while making the condition more specific, measurable and reviewable.</p></div>
+            <div id="tuningCases" class="tuning-cases"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-section" id="final-shift">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">FINAL SHIFT</p><h2>Correlate the evidence, then brief the lead</h2></div>
+        <p>This is the hardest level, but every answer comes directly from the evidence board.</p>
+      </div>
+
+      <div class="case-banner reveal"><div><span>CASE SJ-2207</span><h3>Unusual activity on FIN-LT-07</h3><p>Three sensors observed related activity during a six-minute window.</p></div><div class="case-state"><i></i><span>STATUS</span><b>Needs analyst decision</b></div></div>
+
+      <div class="evidence-timeline reveal">
+        <article><span class="time">14:02</span><div class="timeline-icon ids">IDS</div><div><b>Rare DNS query</b><p><code>10.20.5.88</code> queried <code>update-check.example</code>. The domain is new in this fictional environment.</p><small>ACTION: ALERTED, NOT BLOCKED</small></div></article>
+        <article><span class="time">14:05</span><div class="timeline-icon edr">EDR</div><div><b>Unexpected child process</b><p>The archive viewer on FIN-LT-07 started an unsigned process from the user's temporary folder.</p><small>ACTION: PROCESS OBSERVED</small></div></article>
+        <article><span class="time">14:08</span><div class="timeline-icon ips">IPS</div><div><b>Outbound connection prevented</b><p>The same endpoint attempted TCP/443 to <code>203.0.113.90</code>, which matched the lab's high-confidence block rule.</p><small>ACTION: DROPPED BY IPS</small></div></article>
+      </div>
+
+      <div class="known-unknown reveal"><article><h3>Known</h3><ul><li>All three events involve FIN-LT-07 / 10.20.5.88.</li><li>The IPS dropped the 14:08 connection.</li><li>The process chain is unusual for this endpoint.</li><li>No approved change is shown.</li></ul></article><article><h3>Still unknown</h3><ul><li>Whether the user opened an expected file.</li><li>Whether any earlier connection succeeded.</li><li>What the unsigned process changed.</li><li>Whether another endpoint shows the same pattern.</li></ul></article></div>
+
+      <div class="final-questions reveal" id="finalQuestions"></div>
+      <div class="final-actions"><button class="button primary" id="submitFinal" type="button">Submit final briefing</button><button class="hint-button" data-hint="finalHint" type="button">Show final hint</button></div>
+      <p class="hint" id="finalHint">Use only facts shown on the board. Distinguish alerted from blocked, preserve evidence, state what remains unknown, and escalate according to the playbook.</p>
+      <p class="feedback" id="finalFeedback" aria-live="polite"></p>
+    </section>
+
+    <section class="section certificate-section" id="certificate">
+      <div class="certificate-lock reveal" id="certificateLock"><span class="lock-icon">LOCKED</span><div><p class="eyebrow">COMPLETION REWARD</p><h2>Finish 32 activities to unlock your certificate</h2><p>Your progress is stored in this browser. There is no timer and hints are always allowed.</p></div><b id="lockProgress">0 / 32</b></div>
+      <div class="certificate-maker" id="certificateMaker">
+        <div class="certificate-copy"><p class="eyebrow">LAB COMPLETE</p><h2>You protected Sentinel Junction</h2><p>Enter the learner's name exactly as it should appear, preview the certificate, then download it as a PNG image.</p><label for="learnerName">Learner name</label><input id="learnerName" type="text" maxlength="60" placeholder="Enter full name"><div class="certificate-actions"><button class="button primary" id="previewCertificate" type="button">Preview certificate</button><button class="button secondary" id="downloadCertificate" type="button">Download certificate</button></div><p class="feedback" id="certificateFeedback"></p></div>
+        <canvas id="certificateCanvas" width="1600" height="1000" aria-label="Certificate preview"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer><div><b>Sentinel Junction</b><span>IDS + IPS beginner lab</span></div><p>Fictional, defensive, browser-only training. No real network traffic is generated.</p><a href="#home">Back to top</a></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+SENTINEL JUNCTION - IDS AND IPS LAB
+CLICK-BY-CLICK STUDENT GUIDE (NO ANSWERS)
+============================================================
+
+PURPOSE OF THIS DOCUMENT
+------------------------
+Use this guide if you are unsure what to click, what to read, or what the lab expects.
+It explains every step without revealing the answers. You are allowed to use all in-lab hints.
+There is no timer. Most learners should allow about 90 to 120 minutes.
+
+The lab is a safe browser simulation. It does not scan, block, or connect to any real system.
+All public-looking IP addresses use fictional documentation ranges.
+
+
+WHAT YOU WILL LEARN
+-------------------
+By the end of the lab, you should be able to explain:
+
+1. What an Intrusion Detection System (IDS) does.
+2. What an Intrusion Prevention System (IPS) does.
+3. Why an IDS normally sees a copy of traffic.
+4. Why an IPS must be inline to prevent traffic.
+5. How signature, behaviour and policy detections differ.
+6. Why an alert is a starting point, not automatic proof of an attack.
+7. How source, destination, protocol, port, time, action and rule fields help an analyst.
+8. What true positive, false positive, false negative and true negative mean.
+9. How to classify a basic alert using asset, user, time, baseline and approval context.
+10. Why safe tuning narrows a rule instead of simply turning it off.
+11. How to write a factual hand-off that separates known facts from unknowns.
+
+
+BEFORE YOU START
+----------------
+1. Open index.html in a modern browser, or open the GitHub Pages link provided by your instructor.
+2. Use a normal browser window. Do not use private/incognito mode if you want progress to remain saved.
+3. Keep this text file open in a separate window if you need assistance.
+4. Do not open the instructor answer key unless your instructor tells you to do so.
+
+Important words:
+
+- ALERTED: detection logic matched and a record was created.
+- ALLOWED: the traffic was permitted to continue.
+- BLOCKED or DROPPED: an inline control prevented that recorded connection.
+- CONTEXT: additional facts that help explain what the alert means.
+- BASELINE: a measured picture of what is normally expected.
+- FALSE POSITIVE: harmless or approved activity caused an alert.
+- FALSE NEGATIVE: harmful activity happened but no alert was created.
+
+
+PART 1 - ORIENTATION
+--------------------
+1. At the top of the page, find the progress display. It begins at 0 / 32 activities.
+2. Read the large title, “See the traffic. Make the decision.”
+3. Look at the animated network on the right.
+4. Identify the Internet node, inline IPS, core switch, web server and passive IDS.
+5. Notice that the IPS is on the main traffic line.
+6. Notice that the IDS is connected by a copied or tapped traffic line.
+7. Read the four lab facts under the Start button.
+8. Click “Start guided briefing.”
+
+If you return later:
+1. Open the same browser and the same lab address.
+2. Click “Resume saved progress.”
+3. The page moves to the first unfinished activity.
+
+
+PART 2 - BRIEFING 01: IDS VERSUS IPS
+------------------------------------
+1. Read the complete blue IDS card.
+2. In your own words, say what the IDS sees and what it normally does.
+3. Watch the small line animation. The main traffic continues while a copy is observed.
+4. Read the complete orange IPS card.
+5. In your own words, say why the IPS can affect availability.
+6. Watch the inline animation. The traffic passes through the IPS.
+7. Read all four “Reality” boxes below the cards.
+8. Go to Activity 1.
+9. For each row, click the answer menu.
+10. Select one answer.
+11. Answer all four rows.
+12. Click “Check my answers.”
+13. If the result is not 4/4, click “Show a hint.”
+14. Re-read the two large definition cards and retry.
+15. When correct, confirm that progress changes to 1 / 32.
+
+
+PART 3 - BRIEFING 02: TRAFFIC PLACEMENT
+---------------------------------------
+1. Scroll to “Follow one packet through the network.”
+2. The default selection is “IDS view.”
+3. Click “Replay journey.”
+4. Watch the main TCP/443 packet move from the external client toward the server.
+5. Watch the copy move toward the passive sensor.
+6. Read the explanation under the animation.
+7. Click “IPS view.”
+8. Click “Replay journey.”
+9. Notice that the control moves onto the main line and the copy line disappears.
+10. Read the new decision bubble and explanation.
+11. Switch between IDS view and IPS view once more.
+12. Go to Activity 2.
+13. Read each situation carefully.
+14. Look for words such as copy, mirror, alert, inline, drop and block.
+15. Answer all four rows.
+16. Click “Check placement.”
+17. Use the hint and retry if needed.
+
+
+PART 4 - BRIEFING 03: HOW DETECTION WORKS
+-----------------------------------------
+1. Watch the five-stage detection pipeline.
+2. Read each stage from left to right: Capture, Decode, Compare, Decide and Record.
+3. Read the Signature card.
+4. Read the Behaviour card.
+5. Read the Policy card.
+6. Complete Activity 3 by matching each clue to a method.
+7. Click “Check methods.”
+
+Next, study the sample alert:
+1. Find its time.
+2. Find its source and destination.
+3. Find the protocol and port.
+4. Find its action.
+5. Find the rule identifier.
+6. Complete Activity 4.
+7. Click “Check fields.”
+
+Next, study the outcome matrix:
+1. Read the “Threat exists” column.
+2. Read the “No threat” column.
+3. Compare the “Alert fires” and “No alert” rows.
+4. Complete Activity 5.
+5. Click “Check outcomes.”
+
+Finally, complete the analyst workflow:
+1. Activity 6 shows five buttons in a mixed order.
+2. Click the first investigation step.
+3. If it turns blue, your step was correct.
+4. Continue by clicking the next logical step.
+5. If a button briefly turns red, it is not the next step. Nothing is lost.
+6. Use “Reset this activity” if you want to start the order again.
+7. Continue until all five buttons are blue and numbered.
+
+
+PART 5 - ENTER THE SOC CONSOLE
+------------------------------
+1. Scroll to “Enter the Sentinel SOC console.”
+2. Read the three-step routine above the console:
+   a. Classify.
+   b. Respond.
+   c. Support the decision with evidence.
+3. Inside the dark console, review the four dashboard numbers.
+4. Watch the traffic chart and sensor map.
+5. Remember that the values are synthetic training data.
+
+Live traffic practice:
+1. Click “Live traffic” in the console's left navigation, or scroll to that panel.
+2. Watch a packet travel through the visualizer.
+3. Read the explanation on the right.
+4. Compare the IDS column with the IPS column in the event table.
+5. Find one ALLOWED row.
+6. Find one ALERTED condition.
+7. Find one BLOCKED row.
+8. Click “Pause stream” and inspect the table without new rows appearing.
+9. Click “Resume stream.”
+10. Click “Inject training event.”
+11. Read the new inbound RDP row. This is local simulation only.
+
+
+PART 6 - HOW TO SOLVE EVERY ALERT CASE
+--------------------------------------
+There are 16 guided alert cases. Use this exact routine every time.
+
+1. Scroll to “Alert investigation queue.”
+2. Click the first alert row. The detail drawer opens.
+3. Read the RAW ALERT RECORD from top to bottom.
+4. Answer these questions on paper or in your head:
+   - When did it happen?
+   - What sensor produced it?
+   - What is the source?
+   - What is the destination or target pattern?
+   - Which service or protocol is involved?
+   - Does the action say ALERTED, ALLOWED, BLOCKED or DROPPED?
+   - Which rule matched?
+5. Read every bullet in the CONTEXT DRAWER.
+6. Compare the raw alert with the context. Do not use severity alone.
+7. Under CLASSIFICATION, choose one:
+   - Likely expected or authorised.
+   - Suspicious - investigate further.
+   - High-confidence malicious.
+8. Under RESPONSE, choose one:
+   - Allow or close with clear notes.
+   - Collect evidence and monitor.
+   - Block or contain and escalate.
+9. Under STRONGEST EVIDENCE, choose the option that combines the most relevant independent facts.
+10. Click “Check all three decisions.”
+11. The feedback identifies which decision categories are correct and which need review.
+12. If needed, click “Open guided hint.”
+13. Change only the categories that need review.
+14. Click “Check all three decisions” again.
+15. When resolved, the row gains a green border and a RESOLVED label.
+16. Click the row to close it.
+17. Open the next case.
+
+Repeat these steps for all 16 cases. Take short notes for each one:
+
+Case | Classification | Response | Strongest fact | Alerted or blocked?
+-----|----------------|----------|----------------|--------------------
+  1  |                |          |                |
+  2  |                |          |                |
+  3  |                |          |                |
+  4  |                |          |                |
+  5  |                |          |                |
+  6  |                |          |                |
+  7  |                |          |                |
+  8  |                |          |                |
+  9  |                |          |                |
+ 10  |                |          |                |
+ 11  |                |          |                |
+ 12  |                |          |                |
+ 13  |                |          |                |
+ 14  |                |          |                |
+ 15  |                |          |                |
+ 16  |                |          |                |
+
+Questions to ask whenever you feel stuck:
+
+- Is this source asset supposed to perform this activity?
+- Is there a change, exercise or maintenance ticket?
+- Does the event fall inside the approved time window?
+- Is the observed value actually unusual for this asset's baseline?
+- Do multiple independent sources support the same conclusion?
+- Does the record say ALERTED or BLOCKED?
+- What fact is still missing?
+
+
+PART 7 - SAFE RULE TUNING
+-------------------------
+1. Scroll to “Safe rule tuning lab.”
+2. Read the warning at the top.
+3. For tuning case 1, read the problem and all proposed changes.
+4. Prefer a change that keeps useful detection while making it more specific.
+5. Click “Review change.”
+6. Read the result.
+7. If incorrect, ask whether your change is too broad, permanent or untested.
+8. Retry until the card gains a green border.
+9. Repeat for all five tuning cases.
+
+Safe tuning normally uses one or more of these ideas:
+
+- A narrow source exception.
+- A documented schedule.
+- An asset role.
+- A measured baseline.
+- A reviewed expiration date.
+- A detect-only pilot before prevention.
+- Regression tests for allowed and forbidden examples.
+
+
+PART 8 - FINAL SHIFT
+--------------------
+1. Scroll to “Correlate the evidence, then brief the lead.”
+2. Read the case banner.
+3. Read the three events in time order: 14:02, 14:05 and 14:08.
+4. For each event, identify the product and action.
+5. Read every item in the Known box.
+6. Read every item in the Still unknown box.
+7. Answer all five final decisions.
+8. Click “Submit final briefing.”
+9. Correct rows are saved and highlighted, even if another row is wrong.
+10. Click “Show final hint” if needed.
+11. Re-read the evidence and retry remaining rows.
+
+A good final answer:
+
+- does not invent facts;
+- distinguishes alerting from blocking;
+- says what is known;
+- states what remains unknown;
+- preserves evidence;
+- follows the escalation playbook.
+
+
+PART 9 - DOWNLOAD THE CERTIFICATE
+---------------------------------
+1. Complete all 32 activities.
+2. Scroll to the certificate section.
+3. Confirm the label says UNLOCKED.
+4. Enter the learner's full name.
+5. Click “Preview certificate.”
+6. Check the name and completion statement on the canvas.
+7. Correct the name and preview again if needed.
+8. Click “Download certificate.”
+9. The browser downloads a PNG image.
+10. Save or submit it according to your instructor's directions.
+
+
+TROUBLESHOOTING
+---------------
+Problem: A Check button says to answer every row.
+Solution: Look for a select box still showing “Choose an answer.”
+
+Problem: An alert case will not complete.
+Solution: Read the feedback. It names the categories to review. Open the hint and compare all context facts.
+
+Problem: My progress disappeared.
+Solution: Use the same browser and lab address. Private browsing, cleared site data, or a different device will not share local progress.
+
+Problem: The animation is not moving.
+Solution: Your device may use “Reduce motion.” The lesson still works; read the labels and explanations.
+
+Problem: The certificate remains locked.
+Solution: Check the top progress display. It must show 32 / 32 activities. Click “Resume saved progress” to reach the first unfinished activity.
+
+Problem: I want to start again.
+Solution: Click “Reset lab” at the top and confirm. This permanently clears this lab's saved browser progress.
+
+
+FINAL SELF-CHECK
+----------------
+Before leaving, explain aloud:
+
+1. IDS: what, why and how?
+2. IPS: what, why and how?
+3. Why can an IDS alert exist even though the connection continued?
+4. Why can an over-broad IPS rule harm the business?
+5. Why is asset role important?
+6. What is the difference between a false positive and false negative?
+7. Which evidence belongs in an analyst hand-off?
+
+If you can answer these clearly, you have achieved the lab's learning objective.
